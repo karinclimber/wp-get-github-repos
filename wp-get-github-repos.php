@@ -11,3 +11,6 @@ if(!defined('ABSPATH')) {
     exit;
 }
 
+require_once(plugin_dir_path( __FILE__ ) . './includes/wp-get-github-repos-scripts.php');
+require_once(plugin_dir_path( __FILE__ ) . '/includes/wp-get-github-repos-class.php');
+
