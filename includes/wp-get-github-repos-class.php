@@ -101,28 +101,39 @@ class WP_GET_GITHUB_REPOS extends WP_Widget {
 	}
 
 	public function showRepos($username, $count) {
-		$url ='https://api.github.com/users/' . $username . '/repos?sort=created&per_page=' .$count;
-		$options = array('http' => array('user_agent' => $_SERVER['HTTP_USER_AGENT']));
-		$context = stream_context_create($options);
-		$response = file_get_contents($url, false, $context);
-		$repos = json_decode($response);
+		$url ='https://api.github.com/users/' . $username . '/repos?sort=updated&per_page=' .$count;
+		//$options = array('http' => array('user_agent' => $_SERVER['HTTP_USER_AGENT']));
+		//$context = stream_context_create($options);
+		$response = wp_remote_get($url);
 
-		// Build Output
-		$output = '<ul class="repos">';
-
-		foreach($repos as $repo) {
-			$output .= '<li class="repo-li">';
-
-			$output .= '<div class="repo-title">' .$repo->name. '</div>';
-			$output .= '<div class="repo-desc">' .$repo->description. '</div>';
-			$output .= '<a target="_blank" href="' . $repo->html_url . '">View On Github</a>';
-
-			$output .= '</li>';
+		if( is_wp_error( $response ) ) {
+			return false; // Bail early
 		}
 
-		$output .= '</ul>';
+		$body = wp_remote_retrieve_body($response);
+		$repos = json_decode($body);
 
-		return $output;
+		if(empty($repos->message)) {
+
+			// Build Output
+			$output = '<ul class="repos">';
+
+			foreach ( $repos as $repo ) {
+				$output .= '<li class="repo-li">';
+
+				$output .= '<div class="repo-title">' . $repo->name . '</div>';
+				$output .= '<div class="repo-desc">' . $repo->description . '</div>';
+				$output .= '<a target="_blank" href="' . $repo->html_url . '">View On Github</a>';
+
+				$output .= '</li>';
+			}
+
+			$output .= '</ul>';
+
+			return $output;
+		} else {
+			return "I'm sorry there was a problem. Please try again later.";
+		}
 
 	}
 }
