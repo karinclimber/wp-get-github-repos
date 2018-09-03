@@ -14,3 +14,10 @@ if(!defined('ABSPATH')) {
 require_once(plugin_dir_path( __FILE__ ) . '/includes/wp-get-github-repos-scripts.php');
 require_once(plugin_dir_path( __FILE__ ) . '/includes/wp-get-github-repos-class.php');
 
+// Register Widget
+function wpggr_register_widget() {
+	register_widget('WP_Get_Github_Repos');
+}
+
+add_action('widgets_init', 'wpggr_register_widget');
+
