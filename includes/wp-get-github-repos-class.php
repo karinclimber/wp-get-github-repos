@@ -1,6 +1,6 @@
 <?php
 
-class WP_GET_GITHUB_REPOS extends WP_Widget {
+class wp_get_github_repos extends WP_Widget {
 
 	// Constructor to Create Widget
 	function __construct() {

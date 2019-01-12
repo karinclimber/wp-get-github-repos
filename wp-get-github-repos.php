@@ -16,7 +16,7 @@ require_once(plugin_dir_path( __FILE__ ) . '/includes/wp-get-github-repos-class.
 
 // Register Widget
 function wpggr_register_widget() {
-	register_widget('WP_Get_Github_Repos');
+	register_widget('wp_get_github_repos');
 }
 
 add_action('widgets_init', 'wpggr_register_widget');
