@@ -123,7 +123,7 @@ class WP_GET_GITHUB_REPOS extends WP_Widget {
 
 				$output .= '<div class="repo-title">' . $repo->name . '</div>';
 				$output .= '<div class="repo-desc">' . $repo->description . '</div>';
-				$output .= '<a target="_blank" href="' . $repo->html_url . '">View On Github</a>';
+				$output .= '<a class="repo-link" target="_blank" href="' . $repo->html_url . '">View On Github</a>';
 
 				$output .= '</li>';
 			}
